@@ -10,7 +10,6 @@ import numpy as np
 from nltk.corpus import stopwords
 import re
 from nltk.stem.porter import PorterStemmer
-nltk.download('stopwords')
 
 app = Flask(__name__)
 
