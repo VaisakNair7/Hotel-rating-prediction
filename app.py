@@ -11,6 +11,7 @@ import numpy as np
 from nltk.corpus import stopwords
 import re
 from nltk.stem.porter import PorterStemmer
+nltk.download('stopwords')
 
 app = Flask(__name__)
 
@@ -22,9 +23,11 @@ execption = ['they','them','their','theirs','what','which','who','why', 'how','w
              "wouldn't",'ain','aren', 'didn', 'don']
 stop = [x for x in stopword if x not in execption]
 
+# Load the Pipeline
 import joblib
 model = joblib.load('tfidf_model')
 
+# Used for validating input in textarea
 def validateInput(x):
     if x.isspace() or x.isnumeric():
         return 'Please enter a valid review.'
@@ -32,6 +35,7 @@ def validateInput(x):
 
 def predict():
 
+    # About.
     put_collapse('About', put_tabs([
         {'title':'How it works', 'content': 'This model is trained on 20k reviews crawled from Tripadvisor using TFIDFVectorizer and Logistic Regression. The front end is created using PyWebIO which is a Python library that allows you to build simple web applications with minimal use of HTML and Javascript.'},
         {'title':'Contact', 'content': [  
@@ -44,10 +48,11 @@ def predict():
 
     put_html('<br/>')
     put_html('<br/>')
-    
+
     review = textarea('Hotel review(1-5) prediction based on review', validate = validateInput, 
     placeholder = 'Enter your review here.', required = True)
-
+    
+    # Clean the text
     ps = PorterStemmer()
     text = re.sub('[^a-zA-Z]',' ', review)
     text = text.lower()
@@ -55,6 +60,7 @@ def predict():
     text = [ps.stem(x) for x in text if x not in stop]
     text = ' '.join(text)
 
+    # Prediction
     result = model.predict_proba([text])
 
     one = round(result[0][0] * 100, 2)
@@ -70,6 +76,7 @@ def predict():
     put_markdown('## Ratings')
     put_html('<br/>')
 
+    # processbar is used to display progress bar representing the probabilities of predcitions.
     put_text('1 / 5 :')
     put_processbar('bar1');
     set_processbar('bar1', one / 100)
@@ -99,12 +106,12 @@ app.add_url_rule('/', 'webio_view', webio_view(predict), methods = ['GET', 'POST
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument("-p", "--port", type=int, default=8080)
+    parser.add_argument("-p", "--port", type=int, default = 8080)
     args = parser.parse_args()
 
-    start_server(predict, port=args.port)
-
-#app.run(host='localhost', port=80, debug = True)
+    start_server(predict, port = args.port)
+    
+#app.run(host = 'localhost', port = 80, debug = True)
 
     
 
