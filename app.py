@@ -32,6 +32,19 @@ def validateInput(x):
 
 def predict():
 
+    put_collapse('About', put_tabs([
+        {'title':'How it works', 'content': 'This model is trained on 20k reviews crawled from Tripadvisor using TFIDFVectorizer and Logistic Regression. The front end is created using PyWebIO which is a Python library that allows you to build simple web applications with minimal use of HTML and Javascript.'},
+        {'title':'Contact', 'content': [  
+            put_link('LinkedIn', url = 'https://www.linkedin.com/in/vaisaksnair/', new_window = True),
+            put_html('<br/>'),
+            put_link('GitHub', url = 'https://github.com/VaisakNair7/Hotel-rating-prediction/tree/main', new_window = True),
+            put_text('Mail - vaisaksnair98@gmail.com')
+        ]}
+    ]))
+
+    put_html('<br/>')
+    put_html('<br/>')
+    
     review = textarea('Hotel review(1-5) prediction based on review', validate = validateInput, 
     placeholder = 'Enter your review here.', required = True)
 
