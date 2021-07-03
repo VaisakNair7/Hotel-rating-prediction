@@ -12,6 +12,5 @@ This model uses TFIDFVectorizer to vectorize words and Logistic Regression (Onev
 To run this project on your local machine first install the libraries present in requirements.txt using the command (pip install -r requirements.txt) and then type (python app.py) in the terminal. Make sure to comment and uncomment the blocks in app.py as instructed in the file before running it.
 
 The front end is created using PyWebIO library. PyWebIO provides a series of imperative functions to obtain user input and output on the browser, turning the browser into a “rich text terminal”. It allows you to build simple web applications without the knowledge of HTML and Javascript.
-tripadvisor_hotel_reviews.csv
 
 
