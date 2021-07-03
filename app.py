@@ -48,7 +48,8 @@ def predict():
 
     put_html('<br/>')
     put_html('<br/>')
-
+    
+    # Get input in textarea
     review = textarea('Hotel review(1-5) prediction based on review', validate = validateInput, 
     placeholder = 'Enter your review here.', required = True)
     
@@ -104,14 +105,14 @@ def predict():
 
 app.add_url_rule('/', 'webio_view', webio_view(predict), methods = ['GET', 'POST', 'OPTIONS'])
 
-if __name__ == '__main__':
+if __name__ == '__main__':                            #comment this block to run in your localhost
     parser = argparse.ArgumentParser()
     parser.add_argument("-p", "--port", type=int, default = 8080)
     args = parser.parse_args()
 
     start_server(predict, port = args.port)
     
-#app.run(host = 'localhost', port = 80, debug = True)
+#app.run(host = 'localhost', port = 80, debug = True) #uncomment this to run in your localhost
 
     
 
